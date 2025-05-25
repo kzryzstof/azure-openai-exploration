@@ -4,6 +4,8 @@ variables:
     value : '**/*.csproj'
   - name  : csharpTestProjectFiles
     value : 'test/**/*Tests.csproj'
+  - name  : csharpPublishedProjectFile
+    value : 'src/Prototype.Host/Prototype.Host.csproj'
   #- name  : e2eTestsProject
   #  value : "e2e/AccountsManager.End2EndTests/AccountsManager.End2EndTests.csproj"
   - name  : buildConfiguration
