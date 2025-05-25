@@ -112,7 +112,7 @@ stages:
                 publishWebProjects: false
                 projects  : |
                   src/AccountsManager.Host.App/AccountsManager.Host.App.csproj
-                arguments : '--no-restore --no-build --configuration ${{ variables.buildConfiguration }} /t:PublishContainer -p ContainerImageTag=$(Build.BuildNumber) -p ContainerRepository=${{ variables.imageRepository }} -p ContainerRegistry=${{ variables.azureContainerRegistryUrl }}'
+                arguments : '--no-restore --no-build --configuration ${{ variables.buildConfiguration }} /t:PublishContainer -p ContainerImageTag=$(Build.BuildNumber) -p ContainerRepository=${{ variables.imageRepository }} -p ContainerRegistry=$(ContainerRegistryUrl)'
 
           - task: reportgenerator@5
             displayName: 'generate coverage'
