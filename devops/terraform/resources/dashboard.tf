@@ -151,66 +151,6 @@ resource "azurerm_portal_dashboard" "default" {
             }
           }
         },
-        "3": {
-          "position": {
-            "x": 12,
-            "y": 0,
-            "colSpan": 6,
-            "rowSpan": 3
-          },
-          "metadata": {
-            "inputs": [],
-            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
-            "settings": {
-              "content": {
-                "options": {
-                  "chart": {
-                    "metrics": [
-                      {
-                        "resourceMetadata": {
-                          "id": "${azurerm_servicebus_namespace.default.id}"
-                        },
-                        "name": "IncomingMessages",
-                        "aggregationType": 1,
-                        "namespace": "microsoft.servicebus/namespaces",
-                        "metricVisualization": {
-                          "displayName": "Incoming Messages",
-                          "resourceDisplayName": "${azurerm_servicebus_namespace.default.name}"
-                        }
-                      }
-                    ],
-                    "title": "Incoming Messages",
-                    "titleKind": 1,
-                    "visualization": {
-                      "chartType": 2,
-                      "legendVisualization": {
-                        "isVisible": true,
-                        "position": 2,
-                        "hideSubtitle": false
-                      },
-                      "axisVisualization": {
-                        "x": {
-                          "isVisible": true,
-                          "axisType": 2
-                        },
-                        "y": {
-                          "isVisible": true,
-                          "axisType": 1
-                        }
-                      },
-                      "disablePinning": true
-                    },
-                    "grouping": {
-                      "dimension": "EntityName",
-                      "sort": 2,
-                      "top": 10
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "4": {
           "position": {
             "x": 0,
