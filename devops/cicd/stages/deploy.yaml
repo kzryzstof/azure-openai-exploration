@@ -34,7 +34,7 @@ stages:
           - name      : terraformParametersFile
             value     : '${{ variables.terraform_DevOpsFolder}}/parameters/${{ parameters.environment_name }}.tfvars.json'
 
-        timeoutInMinutes: 10
+        #timeoutInMinutes: 10
 
         steps:
           - task: TerraformInstaller@1
