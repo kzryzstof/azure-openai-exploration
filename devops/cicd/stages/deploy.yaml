@@ -48,8 +48,8 @@ stages:
               command                             : init
               backendType                         : azurerm
               ensureBackend                       : true
-              backendServiceArm                   : ${{ variables.demoTapeSubscription_ServiceConnectionName }}
-              backendAzureRmSubscriptionId        : $(SubscriptionId)
+              backendServiceArm                   : ${{ variables.prototypesSubscription_ServiceConnectionName }}
+              backendAzureRmSubscriptionId        : $(subscription_id)
               backendAzureRmResourceGroupName     : ${{ variables.terraform_ResourceGroupName }}
               backendAzureRmResourceGroupLocation : ${{ variables.terraform_ResourceGroupLocation }}
               backendAzureRmStorageAccountName    : ${{ variables.terraform_StorageAccountName }}
@@ -71,7 +71,7 @@ stages:
               command                       : plan
               commandOptions                : -input=false -lock=false -var-file=${{ variables.terraformParametersFile }} -out=tfplan.${{ parameters.environment_name }} -detailed-exitcode
               provider                      : azurerm
-              environmentServiceNameAzureRM : ${{ variables.demoTapeSubscription_ServiceConnectionName }}
+              environmentServiceNameAzureRM : ${{ variables.prototypesSubscription_ServiceConnectionName }}
               workingDirectory              : ${{ variables.terraformFolder }}
               publishPlanResults            : 'Plan (${{ parameters.environment_name }})'
             env:
@@ -153,7 +153,7 @@ stages:
                       backendType                         : azurerm
                       ensureBackend                       : true
                       backendServiceArm                   : ${{ variables.prototypesSubscription_ServiceConnectionName }}
-                      backendAzureRmSubscriptionId        : $(SubscriptionId)
+                      backendAzureRmSubscriptionId        : $(subscription_id)
                       backendAzureRmResourceGroupName     : ${{ variables.terraform_ResourceGroupName }}
                       backendAzureRmResourceGroupLocation : ${{ variables.terraform_ResourceGroupLocation }}
                       backendAzureRmStorageAccountName    : ${{ variables.terraform_StorageAccountName }}
