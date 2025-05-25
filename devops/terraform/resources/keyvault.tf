@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "default" {
   location            = var.environment_location
 
   sku_name            = "standard"
-  tenant_id           = local.tenant_id
+  tenant_id           = var.tenant_id
   
   purge_protection_enabled = true
   soft_delete_retention_days = 7
