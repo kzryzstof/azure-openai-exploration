@@ -33,7 +33,7 @@ resource "azurerm_container_app" "service" {
   }
 
   registry {
-    server = local.container_registry.url
+    server = var.container_registry_url
     identity = azurerm_user_assigned_identity.default.id
   }
 
