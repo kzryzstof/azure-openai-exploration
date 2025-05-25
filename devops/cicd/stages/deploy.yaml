@@ -75,7 +75,7 @@ stages:
               workingDirectory              : ${{ variables.terraformFolder }}
               publishPlanResults            : 'Plan (${{ parameters.environment_name }})'
             env:
-              "TF_VAR_image_tag"            : ${{ variables.azureContainerRegistryUrl }}/${{ variables.imageRepository }}:${{ parameters.environment_name }}
+              "TF_VAR_image_tag"            : $(container_registry_url)/${{ variables.imageRepository }}:${{ parameters.environment_name }}
               "TF_VAR_build_number"         : $(Build.BuildNumber)
               "TF_VAR_environment_name"     : ${{ parameters.environment_name }}
               "TF_VAR_environment_instance" : ${{ parameters.environment_instance }}
@@ -152,7 +152,7 @@ stages:
                       commandOptions                      : -input=false
                       backendType                         : azurerm
                       ensureBackend                       : true
-                      backendServiceArm                   : ${{ variables.demoTapeSubscription_ServiceConnectionName }}
+                      backendServiceArm                   : ${{ variables.prototypesSubscription_ServiceConnectionName }}
                       backendAzureRmSubscriptionId        : $(SubscriptionId)
                       backendAzureRmResourceGroupName     : ${{ variables.terraform_ResourceGroupName }}
                       backendAzureRmResourceGroupLocation : ${{ variables.terraform_ResourceGroupLocation }}
@@ -162,13 +162,13 @@ stages:
                       backendAzureRmKey                   : ${{ variables.terraformStateFile }}
                       workingDirectory                    : ${{ variables.workingDirectory }}
   
-                  - bash: docker pull ${{ variables.azureContainerRegistryUrl }}/${{ variables.imageRepository }}:$(Build.BuildNumber)
+                  - bash: docker pull $(container_registry_url)/${{ variables.imageRepository }}:$(Build.BuildNumber)
                     displayName: pull image
   
-                  - bash: docker tag ${{ variables.azureContainerRegistryUrl }}/${{ variables.imageRepository }}:$(Build.BuildNumber) ${{ variables.azureContainerRegistryUrl }}/${{ variables.imageRepository }}:${{ parameters.environment_name }}
+                  - bash: docker tag $(container_registry_url)/${{ variables.imageRepository }}:$(Build.BuildNumber) $(container_registry_url)/${{ variables.imageRepository }}:${{ parameters.environment_name }}
                     displayName: tag image
   
-                  - bash: docker push ${{ variables.azureContainerRegistryUrl }}/${{ variables.imageRepository }}:${{ parameters.environment_name }}
+                  - bash: docker push $(container_registry_url)/${{ variables.imageRepository }}:${{ parameters.environment_name }}
                     displayName: push image
   
                   - task: TerraformTaskV4@4
@@ -176,7 +176,7 @@ stages:
                     inputs:
                       command                         : apply
                       provider                        : azurerm
-                      environmentServiceNameAzureRM   : ${{ variables.demoTapeSubscription_ServiceConnectionName }}
+                      environmentServiceNameAzureRM   : ${{ variables.prototypesSubscription_ServiceConnectionName }}
                       workingDirectory                : ${{ variables.workingDirectory }}
                       commandOptions                  : -input=false tfplan.${{ parameters.environment_name }}
 

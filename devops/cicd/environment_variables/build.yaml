@@ -18,7 +18,7 @@ variables:
     value : 'Docker Connector - ACR'
   - name  : acrResourceGroup_ServiceConnectionName
     value : 'ADO Connector - ACR'
-  - name  : demoTapeSubscription_ServiceConnectionName
+  - name  : prototypesSubscription_ServiceConnectionName
     value : 'ADO Connector - Prototypes'
   
   # ACR
@@ -26,10 +26,6 @@ variables:
     value : 'prototypes/azure-openai'
   - name  : containerImagesFolder
     value : 'container_images'
-  - name  : acrName
-    value : 'driftingbyteslabs'
-  - name  : azureContainerRegistryUrl
-    value : '$(acrName)-dwevb4gfdqggf6dz.azurecr.io'
   
   # Checkov
   - name  : checkovVersion
