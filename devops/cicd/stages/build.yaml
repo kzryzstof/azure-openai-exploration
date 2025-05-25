@@ -49,7 +49,7 @@ stages:
                 scriptType: 'pscore'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  $registryName = '$(container_registry_name)'
+                  $registryName = '$(ContainerRegistryName)'
                   $doNotDeleteTags = @('dev', 'prd')
                   $repoArray = (az acr repository list --name $registryName --output json | ConvertFrom-Json)
   
