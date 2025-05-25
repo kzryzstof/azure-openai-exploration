@@ -79,6 +79,14 @@ stages:
               "TF_VAR_build_number"         : $(Build.BuildNumber)
               "TF_VAR_environment_name"     : ${{ parameters.environment_name }}
               "TF_VAR_environment_instance" : ${{ parameters.environment_instance }}
+              # Injected from the pipeline variables.
+              "TF_VAR_tenant_id"                              : $(tenant_id)
+              "TF_VAR_subscription_id"                        : $(subscription_id)
+              "TF_VAR_shared_resources_subscription_id"       : $(shared_resources_subscription_id)
+              "TF_VAR_container_registry_resource_group_name" : $(container_registry_resource_group_name)
+              "TF_VAR_container_registry_name"                : $(container_registry_name)
+              "TF_VAR_container_registry_url"                 : $(container_registry_url)
+              "TF_VAR_budget_email_address"                   : $(budget_email_address)
 
           - bash: rm -r .terraform
             displayName: "clean-up"
