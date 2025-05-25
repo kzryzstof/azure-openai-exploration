@@ -53,14 +53,3 @@ stages:
       environment_instance            : ${{ parameters.environment_instance }}
       pipelineEnvironmentVariables    : '../environment_variables/dev_deploy.yaml'
       poolName                        : ${{ parameters.poolName }}
-
-  #  -------------------------------------------------------------------------------------------------------------------
-  #  PRD
-  #  -------------------------------------------------------------------------------------------------------------------
-  - template: 'stages/deploy.yaml'
-    parameters:
-      dependsOn                       : Build
-      environment_name                : 'prd'
-      environment_instance            : ${{ parameters.environment_instance }}
-      pipelineEnvironmentVariables    : '../environment_variables/prd_deploy.yaml'
-      poolName                        : ${{ parameters.poolName }}
