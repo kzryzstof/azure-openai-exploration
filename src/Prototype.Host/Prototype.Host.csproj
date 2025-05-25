@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <RootNamespace>DriftingBytesLabs.Prototype.Host</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsPublishable>true</IsPublishable>
+        <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+        <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0-noble-chiseled-extra</ContainerBaseImage>
+        <ContainerRuntimeIdentifier>linux-x64</ContainerRuntimeIdentifier>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Prototype.Abstractions\Prototype.Abstractions.csproj" />
+      <ProjectReference Include="..\Prototype.Application\Prototype.Application.csproj" />
+      <ProjectReference Include="..\Prototype.Services.AzureOpenAI\Prototype.Services.AzureOpenAI.csproj" />
+    </ItemGroup>
+
+</Project>

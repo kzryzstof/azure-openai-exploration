@@ -1,0 +1,14 @@
+variables:
+  - template: ./build.yaml
+  - name    : terraform_ResourceGroupLocation
+    value   : 'canadacentral'
+  - name    : terraform_StorageAccountSku
+    value   : 'Standard_LRS'
+  - name    : terraform_DevOpsFolder
+    value   : '$(System.DefaultWorkingDirectory)/devops/terraform'
+  - name    : terraformResourcesPath
+    value   : '$(terraform_DevOpsFolder)/resources'
+  - name    : deploy_ServiceName
+    value   : 'azure-openai'
+  - name    : terraformContainer
+    value   : '$(deploy_ServiceName)'

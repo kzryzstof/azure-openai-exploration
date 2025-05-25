@@ -1,0 +1,18 @@
+trigger: none # no automatic trigger
+
+schedules:
+  # Run at 00:15 UTC (20:15 EST)
+  - cron: "15 0 * * *"
+    displayName: Periodic validation tests
+    branches:
+      include:
+        - main
+    always: true
+
+stages:
+  - template: 'stages/e2e_tests.yaml'
+    parameters:
+      pipelineEnvironmentVariables  : '../environment_variables/dev_deploy.yaml'
+      poolName                      : 'Azure Pipelines'
+      environment_name              : 'dev'
+      environment_instance          : '02'

@@ -1,0 +1,42 @@
+locals {
+  service_name = "azure-open-ai-prototype"
+  
+  # Azure Built-in Roles
+  built_in_roles = {
+    keyvault_secrets_officer_role_name       = "Key Vault Secrets Officer"
+    keyvault_crypto_officer_role_name        = "Key Vault Crypto Officer"
+    keyvault_certificate_officer_role_name   = "Key Vault Certificates Officer"
+    storage_table_data_contributor_role_name = "Storage Table Data Contributor"
+    storage_blob_data_contributor_role_name  = "Storage Blob Data Contributor"
+    storage_account_contributor_role_name    = "Storage Account Contributor"
+    contributor                              = "Contributor"
+    acr_pull                                 = "AcrPull"
+  }
+
+  # Constants
+  data_protection_key_name = "data-protection-key"
+
+  # Shared resources
+  budget = {
+    monthly_amount_allocated = 1
+    alert_threshold          = 60
+  }
+
+  container_app_environment = {
+    resource_group_name = "rg-shared-${var.environment_name}-01"
+    name                = "cae-shared-${var.environment_name}-01"
+  }
+
+  log_analytics_workspace = {
+    resource_group_name = "rg-shared-${var.environment_name}-01",
+    name                = "log-shared-${var.environment_name}-01"
+  }
+  
+  # JWT
+  
+  tags = {
+    "service": local.service_name
+    "environment": var.environment_name,
+    "product": "Prototype: Azure OpenAI"
+  }
+}

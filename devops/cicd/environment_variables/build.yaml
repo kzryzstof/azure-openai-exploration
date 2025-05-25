@@ -1,0 +1,38 @@
+variables:
+  # .net
+  - name  : csharpProjectFiles
+    value : '**/*.csproj'
+  - name  : csharpTestProjectFiles
+    value : 'test/**/*Tests.csproj'
+  #- name  : e2eTestsProject
+  #  value : "e2e/AccountsManager.End2EndTests/AccountsManager.End2EndTests.csproj"
+  - name  : buildConfiguration
+    value : 'Release'
+  
+  # NuGET
+  - name  : nugetPackagesCachePath
+    value : '$(Pipeline.Workspace)/.nuget/packages'
+  
+  # Service connection
+  - name  : containerRegistry_ServiceConnectionName
+    value : 'Docker Connector - ACR'
+  - name  : acrResourceGroup_ServiceConnectionName
+    value : 'ADO Connector - ACR'
+  - name  : demoTapeSubscription_ServiceConnectionName
+    value : 'ADO Connector - Prototypes'
+  
+  # ACR
+  - name  : imageRepository
+    value : 'prototypes/azure-openai'
+  - name  : containerImagesFolder
+    value : 'container_images'
+  - name  : acrName
+    value : 'driftingbyteslabs'
+  - name  : azureContainerRegistryUrl
+    value : '$(acrName)-dwevb4gfdqggf6dz.azurecr.io'
+  
+  # Checkov
+  - name  : checkovVersion
+    value : "3.2.395"
+  - name  : checkovConfigFilename
+    value : "checkov.config"

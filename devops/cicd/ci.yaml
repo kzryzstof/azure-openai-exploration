@@ -1,0 +1,66 @@
+name: $(Date:yy).$(Date:MM).$(Date:dd)$(Rev:rr)
+
+trigger:
+  branches:
+    include:
+      - main
+    exclude:
+      - rel/old*
+  paths:
+    include:
+      - '*'
+
+parameters:
+  - name        : poolName
+    displayName : Pool
+    type        : string
+    default     : 'On-premise Pool'
+    values      :
+      - 'Azure Pipelines'
+      - 'On-premise Pool'
+
+  - name        : environment_instance
+    displayName : 'Environment instance'
+    type        : string
+    default     : '02'
+
+stages:
+
+  #  -------------------------------------------------------------------------------------------------------------------
+  #  Scan misconfiguration
+  #  -------------------------------------------------------------------------------------------------------------------
+  #- ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+  #  - template: 'stages/checkov.yaml'
+  #    parameters:
+  #      pipelineEnvironmentVariables: '../environment_variables/deploy.yaml'
+  #      poolName: ${{ parameters.poolName }}
+      
+  #  -------------------------------------------------------------------------------------------------------------------
+  #  Build image
+  #  -------------------------------------------------------------------------------------------------------------------
+  - template: 'stages/build.yaml'
+    parameters:
+      pipelineEnvironmentVariables  : '../environment_variables/build.yaml'
+      poolName                      : ${{ parameters.poolName }}
+
+  #  -------------------------------------------------------------------------------------------------------------------
+  #  DEV
+  #  -------------------------------------------------------------------------------------------------------------------
+  - template: 'stages/deploy.yaml'
+    parameters:
+      dependsOn                       : Build
+      environment_name                : 'dev'
+      environment_instance            : ${{ parameters.environment_instance }}
+      pipelineEnvironmentVariables    : '../environment_variables/dev_deploy.yaml'
+      poolName                        : ${{ parameters.poolName }}
+
+  #  -------------------------------------------------------------------------------------------------------------------
+  #  PRD
+  #  -------------------------------------------------------------------------------------------------------------------
+  - template: 'stages/deploy.yaml'
+    parameters:
+      dependsOn                       : Build
+      environment_name                : 'prd'
+      environment_instance            : ${{ parameters.environment_instance }}
+      pipelineEnvironmentVariables    : '../environment_variables/prd_deploy.yaml'
+      poolName                        : ${{ parameters.poolName }}

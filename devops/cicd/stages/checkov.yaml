@@ -1,0 +1,78 @@
+parameters:
+  - name: pipelineEnvironmentVariables
+    type: string
+  - name: poolName
+    type: string
+
+stages:
+  - stage: Scan_misconfiguration
+    displayName: 'Scan misconfiguration'
+    dependsOn: []
+    jobs:
+      - job: Scan
+        displayName: 'Scan'
+        variables:
+          - template: ${{ parameters.pipelineEnvironmentVariables }}
+          - name  : reportFilename
+            value : 'checkov-report.$(System.JobAttempt).xml'
+          - name  : checkovConfigPath
+            value : '${{ variables.terraformResourcesPath }}/${{ variables.checkovConfigFilename }}'
+        
+        workspace:
+          clean: all
+        
+        pool:
+          name:  ${{ parameters.poolName }}
+
+        steps:
+          # Check input
+          - script: |
+              echo "workingDirectory      = '${{ variables.terraformResourcesPath }}'"
+              echo "checkovConfigFilename = '${{ variables.checkovConfigFilename }}'"
+              echo "checkovVersion        = '${{ variables.checkovVersion }}'"
+              echo "reportFilename        = '${{ variables.reportFilename }}'"
+            displayName: "log parameters"
+
+          - powershell: |
+              if ([string]::IsNullOrWhitespace("${{ variables.terraform_DevOpsFolder }}")) { throw "workingDirectory is empty or whitespace"}
+              if ([string]::IsNullOrWhitespace("${{ variables.checkovConfigFilename }}")) { throw "checkovConfigFilename is empty or whitespace"}
+              if ([string]::IsNullOrWhitespace("${{ variables.checkovVersion }}")) { throw "checkovVersion is empty or whitespace"}
+              if ([string]::IsNullOrWhitespace("${{ variables.reportFilename }}")) { throw "reportFilename is empty or whitespace"}
+            displayName: "validation"
+          
+          # Prepare
+          - task: UsePythonVersion@0
+            displayName: "install Python"
+            inputs:
+              versionSpec: "3.11"
+
+          - task: Bash@3
+            displayName: "install checkov"
+            inputs:
+              targetType: inline
+              script: 'pip3 install "checkov==${{ variables.checkovVersion}}"'
+
+          - task: Bash@3
+            displayName: "check configuration"
+            inputs:
+              targetType: inline
+              script: checkov -d ${{ variables.terraform_DevOpsFolder }} --framework terraform --skip-check CKV_AZURE_3,CKV_AZURE_6,CKV_AZURE_33,CKV_AZURE_34,CKV_AZURE_36,CKV_AZURE_40,CKV_AZURE_41,CKV_AZURE_42,CKV_AZURE_44,CKV_AZURE_59,CKV_AZURE_99,CKV_AZURE_100,CKV_AZURE_101,CKV_AZURE_109,CKV_AZURE_110,CKV_AZURE_111,CKV_AZURE_112,CKV_AZURE_114,CKV_AZURE_132,CKV_AZURE_140,CKV_AZURE_189,CKV_AZURE_190,CKV_AZURE_196,CKV_AZURE_199,CKV_AZURE_201,CKV_AZURE_202,CKV_AZURE_203,CKV_AZURE_204,CKV_AZURE_205,CKV_AZURE_206,CKV_AZURE_244,CKV2_AZURE_1,CKV2_AZURE_8,CKV2_AZURE_20,CKV2_AZURE_21,CKV2_AZURE_32,CKV2_AZURE_33,CKV2_AZURE_38,CKV2_AZURE_40,CKV2_AZURE_41,CKV2_AZURE_47 -s -o junitxml > $(Build.ArtifactStagingDirectory)/${{ variables.reportFilename }}
+          
+          # Publish
+          - script: |
+              sed -i 's/name="terraform_plan scan"/name="${{ variables.reportFilename }}"/g' $(Build.ArtifactStagingDirectory)/${{ variables.reportFilename }}
+            displayName: "Checkov report moving in artifact directory"
+          - script: |
+              cat  $(Build.ArtifactStagingDirectory)/${{ variables.reportFilename }}
+            displayName: View report
+
+          - publish: $(Build.ArtifactStagingDirectory)/${{ variables.reportFilename }}
+            displayName: "Checkov report artifact publication"
+            artifact: ${{ variables.reportFilename }}
+
+          - task: PublishTestResults@2
+            displayName: "Checkov report publication as test results"
+            inputs:
+              failTaskOnFailedTests: true
+              testResultsFormat: "JUnit"
+              testResultsFiles: $(Build.ArtifactStagingDirectory)/${{ variables.reportFilename }}

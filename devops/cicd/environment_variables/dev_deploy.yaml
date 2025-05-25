@@ -1,0 +1,6 @@
+variables:
+  - template  : ./deploy.yaml
+  - name  : terraform_ResourceGroupName
+    value : 'rg-terraform-dev-01'
+  - name  : terraform_StorageAccountName
+    value : 'stterraformd01'
