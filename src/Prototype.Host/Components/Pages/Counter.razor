@@ -1,5 +1,8 @@
 ﻿@page "/counter"
+@using DriftingBytesLabs.Prototype.Abstractions.Services
 @rendermode InteractiveServer
+
+@inject IAiService AiService
 
 <PageTitle>Counter</PageTitle>
 
@@ -12,9 +15,11 @@
 @code {
     private int currentCount = 0;
 
-    private void IncrementCount()
+    private async void IncrementCount()
     {
         currentCount++;
+
+        await AiService.TestAsync().ConfigureAwait(false);
     }
 
 }

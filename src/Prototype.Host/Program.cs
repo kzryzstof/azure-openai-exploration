@@ -3,6 +3,9 @@ using DriftingBytesLabs.Prototype.Host.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+
+//  TODO Use Keyvault to store Data Protection keys
+
 // Add services to the container.
 builder.Services
     .AddRazorComponents()

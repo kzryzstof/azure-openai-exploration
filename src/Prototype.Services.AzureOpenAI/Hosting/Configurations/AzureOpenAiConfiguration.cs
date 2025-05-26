@@ -1,8 +1,8 @@
 namespace DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
 
-internal readonly record struct AzureOpenAiConfiguration
-(
-    string Endpoint,
-    string DeploymentName,
-    string OpenAiVersion = ""
-);
+public sealed class AzureOpenAiConfiguration
+{
+    public string Endpoint { get; init; } = string.Empty;
+    public string DeploymentName { get; init; } = string.Empty;
+    public string OpenAiVersion { get; init; } = string.Empty;
+}

@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <RootNamespace>DriftingBytesLabs.Prototype.Host</RootNamespace>
+        <UserSecretsId>5926bb06-2520-4b98-8c5a-918c05ae0261</UserSecretsId>
     </PropertyGroup>
 
     <PropertyGroup>
