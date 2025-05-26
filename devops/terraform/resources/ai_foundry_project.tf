@@ -11,4 +11,8 @@ resource "azurerm_ai_foundry_project" "default" {
   name               = module.ai_foundry_project_naming_convention.name
   location           = azurerm_ai_foundry.default.location
   ai_services_hub_id = azurerm_ai_foundry.default.id
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
