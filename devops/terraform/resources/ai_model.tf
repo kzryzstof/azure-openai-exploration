@@ -4,7 +4,7 @@ resource "azurerm_cognitive_deployment" "o3_mini_model" {
   
   model {
     format = "OpenAI"
-    name   = "gpt-4o"
+    name   = "o3-mini"
   }
   
   sku {
