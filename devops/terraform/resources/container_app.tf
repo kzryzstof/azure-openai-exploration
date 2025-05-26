@@ -87,10 +87,15 @@ resource "azurerm_container_app" "service" {
         value = azurerm_key_vault_key.data_protection_key.id
       }
 
-      #env {
-      #  name  = "AzureOpenAiConfiguration__Endpoint"
-      #  value = azurerm_ai_foundry_project.default.connection
-      #}
+      env {
+        name  = "AzureOpenAiConfiguration__Endpoint"
+        value = azurerm_ai_foundry_project.default.endpoint
+      }
+
+      env {
+        name  = "AzureOpenAiConfiguration__DeploymentName"
+        value = azurerm_cognitive_deployment.gpt4o_model.name
+      }
     }
 
     min_replicas = 0
