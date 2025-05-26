@@ -27,3 +27,12 @@ resource "azurerm_role_assignment" "system_storage_account_blob_access" {
   role_definition_name = local.built_in_roles.storage_blob_data_contributor_role_name
   principal_id        = azurerm_user_assigned_identity.default.principal_id
 }
+
+# ----------------------------------------------------------  
+# Gives the App access to the cognitive service
+# ----------------------------------------------------------
+resource "azurerm_role_assignment" "cognitive_service_user" {
+  scope               = azurerm_cognitive_account.default.id
+  role_definition_name = local.built_in_roles.cognitive_services_users
+  principal_id        = azurerm_user_assigned_identity.default.principal_id
+}
