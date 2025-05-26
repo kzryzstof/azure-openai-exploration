@@ -8,7 +8,7 @@ resource "azurerm_cognitive_deployment" "o4_mini_model" {
   }
   
   sku {
-    name = "GlobalStandard"
+    name = "GlobalBatch"
     capacity = 200
   }
 }

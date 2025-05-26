@@ -27,6 +27,12 @@ resource "azurerm_storage_account" "system" {
   }
   
   tags = local.tags
+  
+  lifecycle {
+    ignore_changes = [
+      blob_properties
+    ]
+  }
 }
 
 resource "azurerm_storage_container" "data" {

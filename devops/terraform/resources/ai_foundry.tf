@@ -13,6 +13,8 @@ resource "azurerm_ai_services" "default" {
   location            = var.environment_location
   resource_group_name = azurerm_resource_group.default.name
   sku_name            = "S0"
+  
+  tags = local.tags
 }
 
 module "ai_foundry_naming_convention" {
@@ -33,5 +35,11 @@ resource "azurerm_ai_foundry" "default" {
 
   identity {
     type = "SystemAssigned"
+  }
+  
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
   }
 }
