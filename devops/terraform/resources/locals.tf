@@ -1,5 +1,5 @@
 locals {
-  service_name = "azure-open-ai-prototype"
+  service_name = "azure-open-ai"
   
   # Azure Built-in Roles
   built_in_roles = {
