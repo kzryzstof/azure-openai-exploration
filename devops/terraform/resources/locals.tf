@@ -21,16 +21,6 @@ locals {
     monthly_amount_allocated = 1
     alert_threshold          = 60
   }
-
-  container_app_environment = {
-    resource_group_name = "rg-shared-${var.environment_name}-01"
-    name                = "cae-shared-${var.environment_name}-01"
-  }
-
-  log_analytics_workspace = {
-    resource_group_name = "rg-shared-${var.environment_name}-01",
-    name                = "log-shared-${var.environment_name}-01"
-  }
   
   # JWT
   

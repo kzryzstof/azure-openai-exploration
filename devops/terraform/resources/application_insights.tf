@@ -23,7 +23,7 @@ resource "azurerm_application_insights" "default" {
   sampling_percentage = 25
   daily_data_cap_in_gb = 0.5
   
-  workspace_id        = data.azurerm_log_analytics_workspace.shared.id
+  workspace_id        = azurerm_log_analytics_workspace.default.id
 
   tags = local.tags
 }

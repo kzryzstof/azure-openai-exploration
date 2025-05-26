@@ -15,7 +15,7 @@ resource "azurerm_role_assignment" "acr_pull" {
 
 resource "azurerm_container_app" "service" {
   name                         = module.container_webapp_naming_convention.name
-  container_app_environment_id = data.azurerm_container_app_environment.shared.id
+  container_app_environment_id = azurerm_container_app_environment.default.id
   resource_group_name          = azurerm_resource_group.default.name
   revision_mode                = "Single"
 
