@@ -8,6 +8,7 @@ variable "environment_instance" {
 
 variable "environment_location" {
   type  = string
+  description = "AI models are not available everywhere"
 }
 
 variable "image_tag" {
