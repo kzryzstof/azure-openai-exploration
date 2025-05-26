@@ -87,10 +87,10 @@ resource "azurerm_container_app" "service" {
         value = azurerm_key_vault_key.data_protection_key.id
       }
 
-      env {
-        name  = "AzureOpenAiConfiguration__Endpoint"
-        value = azurerm_ai_foundry_project.default.endpoint
-      }
+      #env {
+      #  name  = "AzureOpenAiConfiguration__Endpoint"
+      #  value = azurerm_ai_foundry_project.default.endpoint
+      #}
 
       env {
         name  = "AzureOpenAiConfiguration__DeploymentName"
