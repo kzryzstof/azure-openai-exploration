@@ -94,7 +94,7 @@ resource "azurerm_container_app" "service" {
 
       env {
         name  = "AzureOpenAiConfiguration__DeploymentName"
-        value = azurerm_cognitive_deployment.gpt4o_model.name
+        value = azurerm_cognitive_deployment.o3_mini_model.name
       }
     }
 
