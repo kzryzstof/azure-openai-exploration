@@ -4,7 +4,6 @@ module "log_analytics_namingConvention" {
   name        = local.service_name
   type        = "log"
   instance    = var.environment_instance
-  instance    = var.environment_instance
   delimiter   = "-"
 }
 
