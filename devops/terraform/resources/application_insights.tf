@@ -1,10 +1,3 @@
-data "azurerm_log_analytics_workspace" "shared" {
-  resource_group_name = local.log_analytics_workspace.resource_group_name
-  name                = local.log_analytics_workspace.name
-
-  provider = azurerm.shared_resources
-}
-
 module "application_insights_naming_convention" {
   source              = "../modules/naming_convention"
   environment         = var.environment_name
