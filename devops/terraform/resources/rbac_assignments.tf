@@ -31,8 +31,8 @@ resource "azurerm_role_assignment" "system_storage_account_blob_access" {
 # ----------------------------------------------------------  
 # Gives the App access to the cognitive service
 # ----------------------------------------------------------
-resource "azurerm_role_assignment" "cognitive_service_user" {
-  scope               = azurerm_cognitive_account.default.id
-  role_definition_name = local.built_in_roles.cognitive_services_users
+resource "azurerm_role_assignment" "ai_foundry_user" {
+  scope               = azurerm_ai_services.default.id
+  role_definition_name = local.built_in_roles.cognitive_services_openai_user
   principal_id        = azurerm_user_assigned_identity.default.principal_id
 }

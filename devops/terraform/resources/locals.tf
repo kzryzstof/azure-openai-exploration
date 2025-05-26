@@ -11,7 +11,7 @@ locals {
     storage_account_contributor_role_name    = "Storage Account Contributor"
     contributor                              = "Contributor"
     acr_pull                                 = "AcrPull"
-    cognitive_services_users                 = "Cognitive Services User"
+    cognitive_services_openai_user           = "Cognitive Services OpenAI User"
   }
 
   # Constants
