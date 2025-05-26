@@ -30,4 +30,8 @@ resource "azurerm_ai_foundry" "default" {
   resource_group_name = azurerm_resource_group.default.name
   storage_account_id  = azurerm_storage_account.system.id
   key_vault_id        = azurerm_key_vault.default.id
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
