@@ -2,8 +2,7 @@ module "cognitive_account_naming_convention" {
   source              = "../modules/naming_convention"
   environment         = var.environment_name
   name                = local.service_name
-  type                = "cog
-  "
+  type                = "cog"
   instance            = var.environment_instance
   delimiter           = "-"
 }
