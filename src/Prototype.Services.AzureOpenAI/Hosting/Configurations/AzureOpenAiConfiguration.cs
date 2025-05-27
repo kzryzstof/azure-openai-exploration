@@ -4,6 +4,5 @@ public sealed class AzureOpenAiConfiguration
 {
     public string Endpoint { get; init; } = string.Empty;
     public string DeploymentName { get; init; } = string.Empty;
-    public string Secret { get; init; } = string.Empty;
-    public string OpenAiVersion { get; init; } = string.Empty;
+    public string SecretKey { get; init; } = string.Empty;
 }

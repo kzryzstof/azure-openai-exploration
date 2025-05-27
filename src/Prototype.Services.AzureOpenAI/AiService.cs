@@ -1,8 +1,11 @@
+using System.Text.Json;
 using Azure;
 using Azure.AI.OpenAI;
 using Azure.AI.OpenAI.Chat;
 using DriftingBytesLabs.Prototype.Abstractions.Services;
+using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Entities;
 using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using OpenAI.Chat;
 
@@ -15,17 +18,20 @@ internal sealed class AiService : IAiService
     
     public AiService
     (
-        IOptions<AzureOpenAiConfiguration> options
+        IOptions<AzureOpenAiConfiguration> options,
+        IConfiguration configuration
     )
     {
         _configuration = options.Value;
+
+        var azureAiFoundryKey = JsonSerializer.Deserialize<AzureAiFoundryKey>(configuration[_configuration.SecretKey]!);
         
         _aiClient = new AzureOpenAIClient
         (
             new Uri(_configuration.Endpoint),
             //  https://github.com/Azure/azure-sdk-for-net/issues/49462
             //new DefaultAzureCredential(),
-            new AzureKeyCredential(_configuration.Secret),
+            new AzureKeyCredential(azureAiFoundryKey.Key),
             new AzureOpenAIClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2025_03_01_Preview)
         );
     }

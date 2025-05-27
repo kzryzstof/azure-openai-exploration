@@ -1,19 +1,56 @@
+using Azure.Identity;
 using DriftingBytesLabs.Prototype.Host.Components;
 using DriftingBytesLabs.Prototype.Host.Extensions;
+using Microsoft.AspNetCore.DataProtection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+var tokenCredential = new DefaultAzureCredential();
 
-//  TODO Use Keyvault to store Data Protection keys
+//	------------------------------------------------------------------------------------------
+//  Sets up the Data Protection keys
+//	------------------------------------------------------------------------------------------
+builder.Services
+    .AddDataProtection()
+    .PersistKeysToAzureBlobStorage
+    (
+        new Uri(builder.Configuration["DataProtectionKey:BlobUri"] ?? "https://storage/data/protection/not/configured"),
+        tokenCredential
+    )
+    .ProtectKeysWithAzureKeyVault
+    (
+        new Uri(builder.Configuration["DataProtectionKey:KeyUri"] ?? "https://keyvault/data/protection/not/configured"),
+        tokenCredential
+    )
+    ;
 
-// Add services to the container.
+//	------------------------------------------------------------------------------------------
+//  Injects the key vault as a source for the configuration
+//	------------------------------------------------------------------------------------------
+builder
+    .Configuration
+    .AddAzureKeyVault
+    (
+        new Uri(builder.Configuration["KeyVaultConfiguration:Endpoint"] ?? string.Empty),
+        tokenCredential
+    );
+
+//	------------------------------------------------------------------------------------------
+//  Add services to the container.
+//	------------------------------------------------------------------------------------------
 builder.Services
     .AddRazorComponents()
     .AddInteractiveServerComponents();
 
+//	------------------------------------------------------------------------------------------
+//  Injects our services
+//	------------------------------------------------------------------------------------------
 builder.Services
     .AddServices();
 
+//	------------------------------------------------------------------------------------------
+//  Builds the Web Application
+//	------------------------------------------------------------------------------------------
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
