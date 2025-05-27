@@ -1,9 +1,11 @@
 ﻿@page "/ask-mario"
-@using DriftingBytesLabs.Prototype.Abstractions.Services
+
+@using DriftingBytesLabs.Prototype.Abstractions.Requests
+@using Mediator
 
 @rendermode InteractiveServer
 
-@inject IAiService AiService
+@inject IMediator Mediator
 
 <PageTitle>It's-a me, Mario!</PageTitle>
 <br/>
@@ -40,10 +42,14 @@
     private async void AskMario()
     {
         Response = string.Empty;
+
+        AskQuestionResponse response = await Mediator.Send
+        (
+            new AskQuestionRequest()
+        );
         
-        await foreach (var responsePart in AiService.QuestionAsync().ConfigureAwait(false))
+        await foreach (var responsePart in response.Response)
         {
-            //Response += Regex.Replace(HttpUtility.HtmlEncode(@responsePart), "\r?\n|\r", "<br />");
             Response += responsePart;
             StateHasChanged();
         }

@@ -5,6 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Diagnostics" />
+      <PackageReference Include="JetBrains.Annotations" />
+      <PackageReference Include="Mediator.Abstractions" />
+      <PackageReference Include="Mediator.SourceGenerator">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
 

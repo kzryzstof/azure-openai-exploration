@@ -351,6 +351,7 @@
       "prototype.abstractions": {
         "type": "Project",
         "dependencies": {
+          "Mediator.Abstractions": "[2.1.7, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[9.0.5, )",
           "Microsoft.Extensions.Configuration.Binder": "[9.0.5, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.5, )",
@@ -360,6 +361,9 @@
       "prototype.application": {
         "type": "Project",
         "dependencies": {
+          "CommunityToolkit.Diagnostics": "[8.4.0, )",
+          "JetBrains.Annotations": "[2024.3.0, )",
+          "Mediator.Abstractions": "[2.1.7, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.5, )",
           "Prototype.Abstractions": "[1.0.0, )"
         }
@@ -395,6 +399,28 @@
           "Microsoft.Identity.Client": "4.71.1",
           "Microsoft.Identity.Client.Extensions.Msal": "4.71.1",
           "System.Memory": "4.5.5"
+        }
+      },
+      "CommunityToolkit.Diagnostics": {
+        "type": "CentralTransitive",
+        "requested": "[8.4.0, )",
+        "resolved": "8.4.0",
+        "contentHash": "/9Nuy8EWo0ZYQsjn3h4OGxjCWVYXl3TV3fvv29f8IVqplXgXGRzIpbtHEHGOfykh+TPbzUclzIfMCBzmgblKDA=="
+      },
+      "JetBrains.Annotations": {
+        "type": "CentralTransitive",
+        "requested": "[2024.3.0, )",
+        "resolved": "2024.3.0",
+        "contentHash": "ox5pkeLQXjvJdyAB4b2sBYAlqZGLh3PjSnP1bQNVx72ONuTJ9+34/+Rq91Fc0dG29XG9RgZur9+NcP4riihTug=="
+      },
+      "Mediator.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[2.1.7, )",
+        "resolved": "2.1.7",
+        "contentHash": "93GWsxuikSVSGvWeNwkMecMXjUYURNyNj978FTnH7PhC3hrGh8mERNkxRNWIvLj7k0nnrnsQxixEQ0NxRXNkow==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
