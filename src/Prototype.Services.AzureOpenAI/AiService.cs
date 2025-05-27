@@ -16,8 +16,7 @@ internal sealed class AiService : IAiService
     {
         MaxOutputTokenCount = 1_000
     };
-    
-    private readonly AzureOpenAiConfiguration _configuration;
+
     private readonly ChatClient _chatClient;
     
     public AiService
@@ -26,44 +25,37 @@ internal sealed class AiService : IAiService
         IConfiguration configuration
     )
     {
-        _configuration = options.Value;
+        AzureOpenAiConfiguration configuration1 = options.Value;
 
-        var azureAiFoundryKey = JsonSerializer.Deserialize<AzureAiFoundryKey>(configuration[_configuration.SecretKey]!);
+        var azureAiFoundryKey = JsonSerializer.Deserialize<AzureAiFoundryKey>(configuration[configuration1.SecretKey]!);
         
         var aiClient = new AzureOpenAIClient
         (
-            new Uri(_configuration.Endpoint),
+            new Uri(configuration1.Endpoint),
             //  https://github.com/Azure/azure-sdk-for-net/issues/49462
             //new DefaultAzureCredential(),
             new AzureKeyCredential(azureAiFoundryKey.Key)
         );
         
-        _chatClient = aiClient.GetChatClient(_configuration.DeploymentName);
+        _chatClient = aiClient.GetChatClient(configuration1.DeploymentName);
     }
 
-    public async Task QuestionAsync()
+    public async IAsyncEnumerable<string> QuestionAsync()
     {
         var chatUpdates = _chatClient.CompleteChatStreamingAsync
         (
     [
                 new SystemChatMessage("You are a helpful assistant. You talk like Nintendo's character Mario. You are very friendly and use references from your world."),
-                new UserChatMessage("I am going to Paris, what should I see?"),
-                //new AssistantChatMessage("Yes, customer managed keys are supported by Azure OpenAI"),
-                //new UserChatMessage("Do other Azure services support this too?")
+                new UserChatMessage("I am going to Paris, what should I see?")
             ],
             RequestOptions
         );
 
         await foreach(StreamingChatCompletionUpdate? chatUpdate in chatUpdates)
         {
-            if (chatUpdate.Role.HasValue)
-            {
-                Console.Write($"{chatUpdate.Role} : ");
-            }
-
             foreach(ChatMessageContentPart? contentPart in chatUpdate.ContentUpdate)
             {
-                Console.Write(contentPart.Text);
+                yield return contentPart.Text;
             }
         }
     }

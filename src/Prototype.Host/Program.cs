@@ -2,6 +2,7 @@ using Azure.Identity;
 using DriftingBytesLabs.Prototype.Host.Components;
 using DriftingBytesLabs.Prototype.Host.Extensions;
 using Microsoft.AspNetCore.DataProtection;
+using Radzen;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -36,11 +37,13 @@ builder
     );
 
 //	------------------------------------------------------------------------------------------
-//  Add services to the container.
+//  Add services to the container & Blazor
 //	------------------------------------------------------------------------------------------
 builder.Services
     .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddRadzenComponents();
 
 //	------------------------------------------------------------------------------------------
 //  Injects our services

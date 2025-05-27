@@ -1,25 +1,51 @@
-﻿@page "/counter"
+﻿@page "/ask-mario"
 @using DriftingBytesLabs.Prototype.Abstractions.Services
+
 @rendermode InteractiveServer
 
 @inject IAiService AiService
 
-<PageTitle>Counter</PageTitle>
-
-<h1>Counter</h1>
-
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<PageTitle>It's-a me, Mario!</PageTitle>
+<br/>
+<h1>It's-a me, Mario!</h1>
+<br/>
+<RadzenButton
+    class="btn btn-primary"
+    Click="() => AskMario()">
+    Ask Mario a question
+</RadzenButton>
+<br/>
+<RadzenCard>
+    <RadzenRow>
+        <RadzenText
+            TextStyle="TextStyle.Subtitle2"
+            TagName="TagName.H3">
+            Mario says:
+        </RadzenText>
+    </RadzenRow>
+    <RadzenRow>
+        <RadzenTextArea
+            Value=@Response
+            style="width: 100%;"
+            Rows="30"
+            aria-label="TextArea with placeholder"
+            ReadOnly="true" 
+            />
+    </RadzenRow>
+</RadzenCard>
 
 @code {
-    private int currentCount = 0;
-
-    private async void IncrementCount()
+    private string Response { get; set; } = "";
+    
+    private async void AskMario()
     {
-        currentCount++;
-
-        await AiService.QuestionAsync().ConfigureAwait(false);
+        Response = string.Empty;
+        
+        await foreach (var responsePart in AiService.QuestionAsync().ConfigureAwait(false))
+        {
+            //Response += Regex.Replace(HttpUtility.HtmlEncode(@responsePart), "\r?\n|\r", "<br />");
+            Response += responsePart;
+            StateHasChanged();
+        }
     }
-
 }
