@@ -23,7 +23,7 @@ locals {
     alert_threshold          = 60
   }
   
-  # JWT
+  azure_ai_foundry_secret_name = "${azurerm_ai_foundry.default.workspace_id}-${replace(azurerm_ai_foundry.default.name, '-', '')}" 
   
   tags = {
     "service": local.service_name

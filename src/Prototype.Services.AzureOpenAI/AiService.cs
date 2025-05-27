@@ -1,5 +1,6 @@
+using Azure;
 using Azure.AI.OpenAI;
-using Azure.Identity;
+using Azure.AI.OpenAI.Chat;
 using DriftingBytesLabs.Prototype.Abstractions.Services;
 using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
 using Microsoft.Extensions.Options;
@@ -22,7 +23,10 @@ internal sealed class AiService : IAiService
         _aiClient = new AzureOpenAIClient
         (
             new Uri(_configuration.Endpoint),
-            new DefaultAzureCredential()
+            //  https://github.com/Azure/azure-sdk-for-net/issues/49462
+            //new DefaultAzureCredential(),
+            new AzureKeyCredential(_configuration.Secret),
+            new AzureOpenAIClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2025_03_01_Preview)
         );
     }
 
@@ -31,24 +35,38 @@ internal sealed class AiService : IAiService
     {
         ChatClient chatClient = _aiClient.GetChatClient(_configuration.DeploymentName);
 
+        var requestOptions = new ChatCompletionOptions
+        {
+            MaxOutputTokenCount = 1_000
+        };
+        
+        // The SetNewMaxCompletionTokensPropertyEnabled() method is an [Experimental] opt-in to use
+        // the new max_completion_tokens JSON property instead of the legacy max_tokens property.
+        // This extension method will be removed and unnecessary in a future service API version;
+        // please disable the [Experimental] warning to acknowledge.
+#pragma warning disable AOAI001
+        requestOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
+#pragma warning restore AOAI001
+        
         var chatUpdates = chatClient.CompleteChatStreamingAsync
         (
-        [
-                new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
-                new UserChatMessage("Does Azure OpenAI support customer managed keys?"),
+    [
+                new SystemChatMessage("You are a helpful assistant."),
+                new UserChatMessage("I am going to Paris, what should I see?"),
                 new AssistantChatMessage("Yes, customer managed keys are supported by Azure OpenAI"),
                 new UserChatMessage("Do other Azure services support this too?")
-            ]
+            ],
+            requestOptions
         );
 
-        await foreach(var chatUpdate in chatUpdates)
+        await foreach(StreamingChatCompletionUpdate? chatUpdate in chatUpdates)
         {
             if (chatUpdate.Role.HasValue)
             {
                 Console.Write($"{chatUpdate.Role} : ");
             }
 
-            foreach(var contentPart in chatUpdate.ContentUpdate)
+            foreach(ChatMessageContentPart? contentPart in chatUpdate.ContentUpdate)
             {
                 Console.Write(contentPart.Text);
             }

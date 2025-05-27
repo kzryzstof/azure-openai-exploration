@@ -87,10 +87,15 @@ resource "azurerm_container_app" "service" {
         value = azurerm_key_vault_key.data_protection_key.id
       }
 
-      #env {
-      #  name  = "AzureOpenAiConfiguration__Endpoint"
-      #  value = azurerm_ai_foundry_project.default.endpoint
-      #}
+      env {
+        name  = "AzureOpenAiConfiguration__Endpoint"
+        value = "https://${var.environment_location}.api.cognitive.microsoft.com"
+      }
+
+      env {
+        name  = "AzureOpenAiConfiguration__SecretKey"
+        value = local.azure_ai_foundry_secret_name
+      }
 
       env {
         name  = "AzureOpenAiConfiguration__DeploymentName"
