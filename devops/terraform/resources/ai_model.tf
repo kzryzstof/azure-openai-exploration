@@ -1,10 +1,10 @@
-resource "azurerm_cognitive_deployment" "o4_mini_model" {
+resource "azurerm_cognitive_deployment" "gpt_4_1_nano_model" {
   cognitive_account_id = azurerm_ai_services.default.id
-  name                 = "o4_mini"
+  name                 = "gpt-4.1-nano"
   
   model {
     format = "OpenAI"
-    name   = "o4-mini"
+    name   = "gpt-4.1-nano"
   }
   
   sku {
