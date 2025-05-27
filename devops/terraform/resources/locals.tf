@@ -22,8 +22,8 @@ locals {
     monthly_amount_allocated = 1
     alert_threshold          = 60
   }
-  
-  azure_ai_foundry_secret_name = "${azurerm_ai_foundry.default.workspace_id}-${replace(azurerm_ai_foundry.default.name, '-', '')}" 
+
+  azure_ai_foundry_short_name = replace(azurerm_ai_foundry.default.name, '-', '')
   
   tags = {
     "service": local.service_name

@@ -94,7 +94,7 @@ resource "azurerm_container_app" "service" {
 
       env {
         name  = "AzureOpenAiConfiguration__SecretKey"
-        value = local.azure_ai_foundry_secret_name
+        value = "${azurerm_ai_foundry.default.workspace_id}-${local.azure_ai_foundry_short_name}"
       }
 
       env {
