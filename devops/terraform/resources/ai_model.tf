@@ -8,7 +8,7 @@ resource "azurerm_cognitive_deployment" "gpt_4_1_nano_model" {
   }
   
   sku {
-    name = "Standard"
+    name = "GlobalStandard"
     capacity = 200
   }
 }
