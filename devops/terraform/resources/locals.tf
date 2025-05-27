@@ -23,7 +23,7 @@ locals {
     alert_threshold          = 60
   }
 
-  azure_ai_foundry_short_name = replace(azurerm_ai_foundry.default.name, '-', '')
+  azure_ai_foundry_short_name = replace(azurerm_ai_foundry.default.name, "-", "")
   
   tags = {
     "service": local.service_name
