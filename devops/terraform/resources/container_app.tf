@@ -98,8 +98,13 @@ resource "azurerm_container_app" "service" {
       }
 
       env {
-        name  = "AzureOpenAiConfiguration__DeploymentName"
-        value = azurerm_cognitive_deployment.default.name
+        name  = "AzureOpenAiConfiguration__ChatDeploymentName"
+        value = azurerm_cognitive_deployment.chat_model.name
+      }
+
+      env {
+        name  = "AzureOpenAiConfiguration__SpeechDeploymentName"
+        value = azurerm_cognitive_deployment.speech_model.name
       }
     }
 

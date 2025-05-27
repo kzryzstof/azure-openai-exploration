@@ -37,7 +37,7 @@ internal sealed class AiService : IAiService
             new AzureKeyCredential(azureAiFoundryKey.Key)
         );
         
-        _chatClient = aiClient.GetChatClient(configuration1.DeploymentName);
+        _chatClient = aiClient.GetChatClient(configuration1.ChatDeploymentName);
     }
 
     public async IAsyncEnumerable<string> QuestionAsync()

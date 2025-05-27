@@ -1,6 +1,6 @@
-resource "azurerm_cognitive_deployment" "default" {
+resource "azurerm_cognitive_deployment" "chat_model" {
   cognitive_account_id = azurerm_ai_services.default.id
-  name                 = "gpt-4.1-mini"
+  name                 = "chat-model"
   
   model {
     format = "OpenAI"

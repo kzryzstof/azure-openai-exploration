@@ -3,6 +3,7 @@ namespace DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configuration
 public sealed class AzureOpenAiConfiguration
 {
     public string Endpoint { get; init; } = string.Empty;
-    public string DeploymentName { get; init; } = string.Empty;
+    public string ChatDeploymentName { get; init; } = string.Empty;
+    public string SpeechDeploymentName { get; init; } = string.Empty;
     public string SecretKey { get; init; } = string.Empty;
 }
