@@ -1,7 +1,6 @@
 using System.Text.Json;
 using Azure;
 using Azure.AI.OpenAI;
-using Azure.AI.OpenAI.Chat;
 using DriftingBytesLabs.Prototype.Abstractions.Services;
 using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Entities;
 using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
@@ -31,13 +30,11 @@ internal sealed class AiService : IAiService
             new Uri(_configuration.Endpoint),
             //  https://github.com/Azure/azure-sdk-for-net/issues/49462
             //new DefaultAzureCredential(),
-            new AzureKeyCredential(azureAiFoundryKey.Key),
-            new AzureOpenAIClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2025_03_01_Preview)
+            new AzureKeyCredential(azureAiFoundryKey.Key)
         );
     }
 
-    public async Task TestAsync
-    ( )
+    public async Task TestAsync()
     {
         ChatClient chatClient = _aiClient.GetChatClient(_configuration.DeploymentName);
 
@@ -45,14 +42,6 @@ internal sealed class AiService : IAiService
         {
             MaxOutputTokenCount = 1_000
         };
-        
-        // The SetNewMaxCompletionTokensPropertyEnabled() method is an [Experimental] opt-in to use
-        // the new max_completion_tokens JSON property instead of the legacy max_tokens property.
-        // This extension method will be removed and unnecessary in a future service API version;
-        // please disable the [Experimental] warning to acknowledge.
-#pragma warning disable AOAI001
-        requestOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
-#pragma warning restore AOAI001
         
         var chatUpdates = chatClient.CompleteChatStreamingAsync
         (
