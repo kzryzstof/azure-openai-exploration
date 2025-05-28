@@ -14,26 +14,24 @@
 
 <br/>
 <RadzenCard>
-    <RadzenRow>
+    <RadzenRow class="rz-mb-10">
         <RadzenTextBox
-            Value=@Question
-            />
-    </RadzenRow>
-    <RadzenRow>
+            @bind-Value=@Question
+            />  
         <RadzenButton
             class="btn btn-primary"
             Click="() => AskMario()">
             Ask Mario a question
         </RadzenButton>
     </RadzenRow>
-    <RadzenRow>
+    <RadzenRow class="rz-mb-4">
         <RadzenText
             TextStyle="TextStyle.Subtitle2"
             TagName="TagName.H3">
             Mario says:
         </RadzenText>
     </RadzenRow>
-    <RadzenRow>
+    <RadzenRow class="rz-mb-10">
         <RadzenTextArea
             Value=@Response
             style="width: 100%;"
