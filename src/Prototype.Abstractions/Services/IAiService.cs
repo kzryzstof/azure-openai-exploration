@@ -2,5 +2,8 @@ namespace DriftingBytesLabs.Prototype.Abstractions.Services;
 
 public interface IAiService
 {
-    IAsyncEnumerable<string> QuestionAsync();
+    IAsyncEnumerable<string> QuestionAsync
+    (
+        string question
+    );
 }

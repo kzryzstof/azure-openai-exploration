@@ -11,13 +11,21 @@
 <br/>
 <h1>It's-a me, Mario!</h1>
 <br/>
-<RadzenButton
-    class="btn btn-primary"
-    Click="() => AskMario()">
-    Ask Mario a question
-</RadzenButton>
+
 <br/>
 <RadzenCard>
+    <RadzenRow>
+        <RadzenTextBox
+            Value=@Question
+            />
+    </RadzenRow>
+    <RadzenRow>
+        <RadzenButton
+            class="btn btn-primary"
+            Click="() => AskMario()">
+            Ask Mario a question
+        </RadzenButton>
+    </RadzenRow>
     <RadzenRow>
         <RadzenText
             TextStyle="TextStyle.Subtitle2"
@@ -31,12 +39,13 @@
             style="width: 100%;"
             Rows="30"
             aria-label="TextArea with placeholder"
-            ReadOnly="true" 
-            />
+            ReadOnly="true"/>
     </RadzenRow>
 </RadzenCard>
 
 @code {
+    private string Question { get; set; } = "";
+    
     private string Response { get; set; } = "";
     
     private async void AskMario()
@@ -45,7 +54,7 @@
 
         AskQuestionResponse response = await Mediator.Send
         (
-            new AskQuestionRequest()
+            new AskQuestionRequest(Question)
         );
         
         await foreach (var responsePart in response.Response)

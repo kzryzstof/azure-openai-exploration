@@ -31,7 +31,10 @@ internal sealed class AskQuestionHandler : IRequestHandler<AskQuestionRequest, A
         (
             new AskQuestionResponse
             (
-                _aiService.QuestionAsync()
+                _aiService.QuestionAsync
+                (
+                    request.Question
+                )
             )
         );
     }

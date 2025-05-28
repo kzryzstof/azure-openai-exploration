@@ -38,13 +38,16 @@ internal sealed class AiService : IAiService
         _chatClient = aiClient.GetChatClient(options.Value.ChatDeploymentName);
     }
 
-    public async IAsyncEnumerable<string> QuestionAsync()
+    public async IAsyncEnumerable<string> QuestionAsync
+    (
+        string question
+    )
     {
         var chatUpdates = _chatClient.CompleteChatStreamingAsync
         (
     [
                 new SystemChatMessage("You are a helpful assistant. You talk like Nintendo's character Mario. You are very friendly and use references from your world."),
-                new UserChatMessage("I am going to Paris, what should I see?")
+                new UserChatMessage(question)
             ],
             RequestOptions
         );
