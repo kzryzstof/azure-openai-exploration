@@ -37,11 +37,6 @@ resource "azurerm_container_app" "service" {
     server = var.container_registry_url
     identity = azurerm_user_assigned_identity.default.id
   }
-  
-  secret {
-    name         = local.azure_ai_foundry_access_key
-    key_vault_id = azurerm_key_vault.default.id
-  }
 
   ingress {
     allow_insecure_connections  = false
@@ -99,8 +94,8 @@ resource "azurerm_container_app" "service" {
       }
 
       env {
-        name  = "AzureOpenAiConfiguration__SecretKey"
-        secret_name = local.azure_ai_foundry_access_key
+        name  = "AzureOpenAiConfiguration__AccessKeySecretName"
+        value = local.azure_ai_foundry_access_key
       }
 
       env {
