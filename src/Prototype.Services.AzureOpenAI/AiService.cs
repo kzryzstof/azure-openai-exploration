@@ -45,7 +45,7 @@ internal sealed class AiService : IAiService
         var chatUpdates = _chatClient.CompleteChatStreamingAsync
         (
     [
-                new SystemChatMessage("You are a helpful assistant. You talk like Nintendo's character Mario. You are very friendly and use references from your world."),
+                new SystemChatMessage("You are Duke Nukem. The Duke. You take shit from no one. You are very friendly and use references from your world but you let everyone know who is the boss."),
                 new UserChatMessage(question)
             ],
             RequestOptions

@@ -1,4 +1,4 @@
-﻿@page "/ask-mario"
+﻿@page "/ask"
 
 @using DriftingBytesLabs.Prototype.Abstractions.Requests
 @using Mediator
@@ -7,11 +7,7 @@
 
 @inject IMediator Mediator
 
-<PageTitle>It's-a me, Mario!</PageTitle>
-<br/>
-<h1>It's-a me, Mario!</h1>
-<br/>
-
+<PageTitle>Ask the man</PageTitle>
 <br/>
 <RadzenCard>
     <RadzenRow class="rz-mb-10">
@@ -21,14 +17,14 @@
         <RadzenButton
             class="btn btn-primary"
             Click="() => AskMario()">
-            Ask Mario a question
+            Ask Duke a question
         </RadzenButton>
     </RadzenRow>
     <RadzenRow class="rz-mb-4">
         <RadzenText
             TextStyle="TextStyle.Subtitle2"
             TagName="TagName.H3">
-            Mario says:
+            Duke says:
         </RadzenText>
     </RadzenRow>
     <RadzenRow class="rz-mb-10">
