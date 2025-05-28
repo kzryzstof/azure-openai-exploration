@@ -10,12 +10,13 @@
 <PageTitle>Ask the man</PageTitle>
 <br/>
 <RadzenCard>
-    <RadzenRow class="rz-mb-10">
+    <RadzenRow class="rz-mb-6">
         <RadzenTextBox
             @bind-Value=@Question
+            class="col-8"
             />  
         <RadzenButton
-            class="btn btn-primary"
+            class="btn btn-primary col-2"
             Click="() => AskMario()">
             Ask Duke a question
         </RadzenButton>
