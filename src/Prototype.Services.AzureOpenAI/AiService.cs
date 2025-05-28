@@ -25,19 +25,17 @@ internal sealed class AiService : IAiService
         IConfiguration configuration
     )
     {
-        AzureOpenAiConfiguration configuration1 = options.Value;
-
-        var azureAiFoundryKey = JsonSerializer.Deserialize<AzureAiFoundryKey>(configuration[configuration1.SecretKey]!);
+        var azureAiFoundryKey = JsonSerializer.Deserialize<AzureAiFoundryKey>(configuration[options.Value.SecretKey]!);
         
         var aiClient = new AzureOpenAIClient
         (
-            new Uri(configuration1.Endpoint),
+            new Uri(options.Value.Endpoint),
             //  https://github.com/Azure/azure-sdk-for-net/issues/49462
             //new DefaultAzureCredential(),
             new AzureKeyCredential(azureAiFoundryKey.Key)
         );
         
-        _chatClient = aiClient.GetChatClient(configuration1.ChatDeploymentName);
+        _chatClient = aiClient.GetChatClient(options.Value.ChatDeploymentName);
     }
 
     public async IAsyncEnumerable<string> QuestionAsync()
