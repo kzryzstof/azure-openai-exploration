@@ -3,12 +3,13 @@ resource "azurerm_cognitive_deployment" "chat_model" {
   name                 = "chat-model"
   
   model {
-    format = "OpenAI"
-    name   = "gpt-4.1-mini"
+    format  = "OpenAI"
+    name    = "gpt-4.1-nano"
+    version = "2025-04-14"
   }
   
   sku {
-    name = "GlobalBatch"
+    name = "GlobalStandard"
     capacity = 10
   }
 }
