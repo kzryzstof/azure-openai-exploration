@@ -30,3 +30,9 @@ resource "azurerm_key_vault_key" "data_protection_key" {
   key_size     = 2048
   key_opts     = ["unwrapKey", "wrapKey"]
 }
+
+resource "azurerm_key_vault_secret" "azure_ai_foundry_access_key" {
+  key_vault_id = azurerm_key_vault.default.id
+  name         = local.azure_ai_foundry_access_key
+  value        = azurerm_ai_services.default.primary_access_key
+}

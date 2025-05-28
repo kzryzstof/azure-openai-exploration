@@ -25,6 +25,7 @@ resource "azurerm_container_app" "service" {
     ]
   }
 
+   
   identity {
     type = "UserAssigned"
     identity_ids = [
@@ -35,6 +36,11 @@ resource "azurerm_container_app" "service" {
   registry {
     server = var.container_registry_url
     identity = azurerm_user_assigned_identity.default.id
+  }
+  
+  secret {
+    name         = local.azure_ai_foundry_access_key
+    key_vault_id = azurerm_key_vault.default.id
   }
 
   ingress {
@@ -94,7 +100,7 @@ resource "azurerm_container_app" "service" {
 
       env {
         name  = "AzureOpenAiConfiguration__SecretKey"
-        value = azurerm_ai_services.default.primary_access_key
+        secret_name = local.azure_ai_foundry_access_key
       }
 
       env {
