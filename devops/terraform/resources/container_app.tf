@@ -110,7 +110,7 @@ resource "azurerm_container_app" "service" {
 
       env {
         name  = "AzureOpenAiConfiguration__SpeechDeploymentModel"
-        value = azurerm_cognitive_deployment.speech_model.model.name
+        value = azurerm_cognitive_deployment.speech_model.model[0].name
       }
     }
 
