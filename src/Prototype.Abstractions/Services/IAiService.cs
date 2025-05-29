@@ -6,4 +6,9 @@ public interface IAiService
     (
         string question
     );
+
+    Task<Stream> TalkAsync
+    (
+        string text
+    );
 }

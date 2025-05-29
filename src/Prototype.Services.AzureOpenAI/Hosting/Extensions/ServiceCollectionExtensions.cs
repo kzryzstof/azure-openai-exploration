@@ -15,6 +15,9 @@ public static class ServiceCollectionExtensions
         //  Injects the configuration.
         services.AddConfiguration<AzureOpenAiConfiguration>();
         
+        //  Injects internal services.
+        services.AddHttpClient();
+        
         //  Injects the public services.
         services.AddSingleton<IAiService, AiService>();
         

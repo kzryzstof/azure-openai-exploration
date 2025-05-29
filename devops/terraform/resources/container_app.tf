@@ -103,10 +103,15 @@ resource "azurerm_container_app" "service" {
         value = azurerm_cognitive_deployment.chat_model.name
       }
 
-      # env {
-      #   name  = "AzureOpenAiConfiguration__SpeechDeploymentName"
-      #   value = azurerm_cognitive_deployment.speech_model.name
-      # }
+      env {
+        name  = "AzureOpenAiConfiguration__SpeechDeploymentName"
+        value = azurerm_cognitive_deployment.speech_model.name
+      }
+
+      env {
+        name  = "AzureOpenAiConfiguration__SpeechDeploymentModel"
+        value = azurerm_cognitive_deployment.speech_model.model.name
+      }
     }
 
     min_replicas = 0

@@ -6,6 +6,7 @@
 @rendermode InteractiveServer
 
 @inject IMediator Mediator
+@inject IJSRuntime JavascriptRuntime
 
 <PageTitle>Ask the man</PageTitle>
 <br/>
@@ -14,7 +15,7 @@
         <RadzenTextBox
             @bind-Value=@Question
             class="col-8"
-            />  
+        />  
         <RadzenButton
             class="btn btn-primary col-2"
             Click="() => AskMario()">
@@ -47,15 +48,28 @@
     {
         Response = string.Empty;
 
-        AskQuestionResponse response = await Mediator.Send
+        AskQuestionResponse textResponse = await Mediator.Send
         (
             new AskQuestionRequest(Question)
         );
         
-        await foreach (var responsePart in response.Response)
+        await foreach (var responsePart in textResponse.Response)
         {
             Response += responsePart;
             StateHasChanged();
         }
+        
+        TalkResponse audioResponse = await Mediator.Send
+        (
+            new TalkRequest(Response)
+        );
+        
+        using var streamRef = new DotNetStreamReference(stream: audioResponse.Audio);
+        
+        await JavascriptRuntime.InvokeVoidAsync
+        (
+            "PlayAudioFileStream",
+            streamRef
+        );
     }
 }

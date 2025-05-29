@@ -1,7 +1,10 @@
+using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.AI.OpenAI;
 using DriftingBytesLabs.Prototype.Abstractions.Services;
+using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Entities;
 using DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -18,23 +21,35 @@ internal sealed class AiService : IAiService
 
     private readonly ChatClient _chatClient;
     
+    private readonly AzureOpenAiConfiguration _azureOpenAiConfiguration;
+    private readonly HttpClient _text2SpeecHttpClient;
+    private readonly string _text2SpeechEndpoint;
+    
     public AiService
     (
         IOptions<AzureOpenAiConfiguration> options,
-        IConfiguration configuration
+        IConfiguration configuration,
+        IHttpClientFactory httpClientFactory
     )
     {
-        var azureAiFoundryAccessKey = configuration[options.Value.AccessKeySecretName]!;
+        _azureOpenAiConfiguration = options.Value;
+        
+        var accesskey = configuration[_azureOpenAiConfiguration.AccessKeySecretName]!;
         
         var aiClient = new AzureOpenAIClient
         (
             new Uri(options.Value.Endpoint),
             //  https://github.com/Azure/azure-sdk-for-net/issues/49462
             //new DefaultAzureCredential(),
-            new AzureKeyCredential(azureAiFoundryAccessKey)
+            new AzureKeyCredential(accesskey)
         );
         
-        _chatClient = aiClient.GetChatClient(options.Value.ChatDeploymentName);
+        _chatClient = aiClient.GetChatClient(_azureOpenAiConfiguration.ChatDeploymentName);
+        
+        _text2SpeecHttpClient = httpClientFactory.CreateClient();
+        _text2SpeecHttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accesskey}");
+        
+        _text2SpeechEndpoint = $"https://eastus2.cognitiveservices.azure.com/openai/deployments/{_azureOpenAiConfiguration.SpeechDeploymentName}/audio/speech?api-version=2025-03-01-preview";
     }
 
     public async IAsyncEnumerable<string> QuestionAsync
@@ -58,5 +73,34 @@ internal sealed class AiService : IAiService
                 yield return contentPart.Text;
             }
         }
+    }
+
+    public async Task<Stream> TalkAsync
+    (
+        string text
+    )
+    {
+        HttpContent content = new StringContent
+        (
+            JsonSerializer.Serialize
+            (
+                new TextToSpeechContract
+                (
+                    _azureOpenAiConfiguration.SpeechDeploymentModel,
+                    text,
+                    "alloy"
+                )
+            ),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json
+        );
+
+        HttpResponseMessage response = await _text2SpeecHttpClient.PostAsync
+        (
+            _text2SpeechEndpoint,
+            content
+        );
+        
+        return await response.Content.ReadAsStreamAsync();
     }
 }
