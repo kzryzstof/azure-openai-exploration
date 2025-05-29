@@ -22,7 +22,7 @@ parameters:
   - name        : environment_instance
     displayName : 'Environment instance'
     type        : string
-    default     : '10'
+    default     : '25'
 
 stages:
 
