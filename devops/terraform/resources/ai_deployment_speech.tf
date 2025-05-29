@@ -10,6 +10,6 @@ resource "azurerm_cognitive_deployment" "speech_model" {
   
   sku {
     name = "GlobalStandard"
-    capacity = 10000
+    capacity = 500
   }
 }
