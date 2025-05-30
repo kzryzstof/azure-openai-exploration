@@ -1,4 +1,4 @@
-namespace DriftingBytesLabs.Prototype.Services.AzureOpenAI.Hosting.Configurations;
+namespace DriftingBytesLabs.Prototype.Services.Ai.Hosting.Configurations;
 
 public sealed class AzureOpenAiConfiguration
 {

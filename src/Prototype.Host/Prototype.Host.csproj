@@ -15,7 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Prototype.Abstractions\Prototype.Abstractions.csproj" />
       <ProjectReference Include="..\Prototype.Application\Prototype.Application.csproj" />
-      <ProjectReference Include="..\Prototype.Services.AzureOpenAI\Prototype.Services.AzureOpenAI.csproj" />
+      <ProjectReference Include="..\Prototype.Services.Ai\Prototype.Services.Ai.csproj" />
     </ItemGroup>
     
     <ItemGroup>

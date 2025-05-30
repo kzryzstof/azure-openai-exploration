@@ -112,6 +112,21 @@ resource "azurerm_container_app" "service" {
         name  = "AzureOpenAiConfiguration__SpeechDeploymentModel"
         value = azurerm_cognitive_deployment.speech_model.model[0].name
       }
+
+      env {
+        name  = "ElevenLabsConfiguration__EndpointUrl"
+        value = local.eleven_labs_url
+      }
+
+      env {
+        name  = "ElevenLabsConfiguration__ApiKey"
+        value = var.eleven_labs_api_key
+      }
+
+      env {
+        name  = "ElevenLabsConfiguration__VoiceId"
+        value = var.eleven_labs_voice_id
+      }
     }
 
     min_replicas = 0

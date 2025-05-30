@@ -87,6 +87,8 @@ stages:
               "TF_VAR_container_registry_name"                : $(ContainerRegistryName)
               "TF_VAR_container_registry_url"                 : $(ContainerRegistryUrl)
               "TF_VAR_budget_email_address"                   : $(BudgetEmailAddress)
+              "TF_VAR_eleven_labs_api_key"                    : $(ElevenLabsApiKey)
+              "TF_VAR_eleven_labs_voice_id"                   : $(ElevenLabsVoiceId)
 
           - bash: rm -r .terraform
             displayName: "clean-up"

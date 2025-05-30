@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace DriftingBytesLabs.Prototype.Services.AzureOpenAI.Entities;
+namespace DriftingBytesLabs.Prototype.Services.Ai.Entities;
 
 internal readonly record struct TextToSpeechContract
 (

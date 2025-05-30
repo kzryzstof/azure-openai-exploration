@@ -17,6 +17,8 @@ locals {
   # Constants
   data_protection_key_name = "data-protection-key"
   azure_ai_foundry_access_key = "azure-ai-foundry-access-key"
+  
+  eleven_labs_url = "https://api.elevenlabs.io/v1/text-to-speech/"
 
   # Shared resources
   budget = {

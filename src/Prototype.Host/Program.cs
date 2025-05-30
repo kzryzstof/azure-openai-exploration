@@ -49,7 +49,7 @@ builder.Services.AddRadzenComponents();
 //  Injects our services
 //	------------------------------------------------------------------------------------------
 builder.Services
-    .AddServices();
+    .AddServices(builder.Configuration);
 
 //	------------------------------------------------------------------------------------------
 //  Builds the Web Application

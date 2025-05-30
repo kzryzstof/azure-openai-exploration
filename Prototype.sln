@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype.Abstractions", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype.Application", "src\Prototype.Application\Prototype.Application.csproj", "{FA9231F6-C382-41AB-8372-AD85CBB2D5B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype.Services.AzureOpenAI", "src\Prototype.Services.AzureOpenAI\Prototype.Services.AzureOpenAI.csproj", "{A40E80B3-5D82-417B-B775-DA51C78A7A86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype.Services.Ai", "src\Prototype.Services.Ai\Prototype.Services.Ai.csproj", "{A40E80B3-5D82-417B-B775-DA51C78A7A86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

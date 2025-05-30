@@ -63,13 +63,13 @@
         (
             new TalkRequest(Response)
         );
-        
-        using var streamRef = new DotNetStreamReference(stream: audioResponse.Audio);
+
+        using var streamReference = new DotNetStreamReference(stream: audioResponse.Audio);
         
         await JavascriptRuntime.InvokeVoidAsync
         (
             "PlayAudioFileStream",
-            streamRef
+            streamReference
         );
     }
 }

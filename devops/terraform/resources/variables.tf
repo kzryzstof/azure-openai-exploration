@@ -47,3 +47,11 @@ variable "container_registry_url" {
 variable "budget_email_address" {
   type  = string
 }
+
+variable "eleven_labs_api_key" {
+  type  = string
+}
+
+variable "eleven_labs_voice_id" {
+  type  = string
+}
