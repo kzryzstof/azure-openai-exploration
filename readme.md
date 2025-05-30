@@ -14,7 +14,9 @@ Regarding `Azure AI Foundry`, the repository creates also the following resource
 - An `Azure AI Foundry`;
 - An `Azure AI Foundry Project`;
 - A chat model `GPT-4.1-nano` (careful regarding its location as there are severe quotas) 
-- A text-2-speech model `GPT-4o-mini-tts` (careful regarding its location - EastUS2 for now in North America, as there are severe restrictions)
+- Two text-2-speech models:
+  - `GPT-4o-mini-tts` (careful regarding its location - EastUS2 for now in North America, as there are severe restrictions)
+  - `Eleven Labs`
 
 ## Setup
 
