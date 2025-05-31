@@ -114,6 +114,11 @@ resource "azurerm_container_app" "service" {
       }
 
       env {
+        name  = "AzureOpenAiConfiguration__TranscribeDeploymentModel"
+        value = azurerm_cognitive_deployment.transcribe_model.model[0].name
+      }
+
+      env {
         name  = "ElevenLabsConfiguration__EndpointUrl"
         value = local.eleven_labs_url
       }
